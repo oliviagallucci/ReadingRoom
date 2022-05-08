@@ -34,9 +34,11 @@ public class LoginDatabaseDAO implements LoginDAO {
      */
     public LoginDatabaseDAO(){
         try {
+            // if the server is on and configured with username=estore and password=password,
+            // this string will login to the database
             this.connect = DriverManager
-                        .getConnection("jdbc:mysql://smt5541pi.student.rit.edu:3306/book?"
-                                + "user=estore&password=sP3YulgAVf8en6H4");
+                           .getConnection("jdbc:mysql://smt5541pi.student.rit.edu:3306/book?"
+                                        + "user=estore&password=password");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,8 +52,9 @@ public class LoginDatabaseDAO implements LoginDAO {
     @Override
     public boolean register(Account acc) {
         //send the username account stuff into the database
-        //YHE COMMAND, swap the data values with the acc.*getters
-        //INSERT INTO user (LastName, FirstName, PhoneNumber, Username, Password) VALUES ("Gallucci", "Olivia", "(123) 456-7890", "oliviagallucci", "password");
+        //THE COMMAND, swap the data values with the acc.*getters
+        //  INSERT INTO user (LastName, FirstName, PhoneNumber, Username, Password) 
+        //  VALUES ("Gallucci", "Olivia", "(123) 456-7890", "oliviagallucci", "password");
         String query = String.format("INSERT INTO user (LastName, FirstName, PhoneNumber, Username, Password)" +
                         " VALUES ('%s', '%s', '%s', '%s', '%s')"
         , acc.getLastname(), acc.getFirstname(),acc.getPhonenumber(),acc.getUsername(),acc.getPassword()); 
@@ -111,7 +114,7 @@ public class LoginDatabaseDAO implements LoginDAO {
         //no account with that username - return false
         if (queryResult != null || !queryResult.equals("") ){   
             System.out.println("pass empty check");
-        // check the returned password and the acc.getpassword, if same return true, if not fallse
+        // check the returned password and the acc.getpassword, if same return true, if not false
             if(this.queryResult.equals(acc.getPassword())){
                 System.out.println("pass password check");
                 return true;
